@@ -149,8 +149,8 @@ function App() {
     <section className="map-shell">
       <div className="intro-card">
         <p className="eyebrow">四国地图攻略</p>
-        <h2><span>点真实地图，</span><span>决定这一段</span><span>要不要去。</span></h2>
-        <p className="intro-copy"><span>单独地图页。</span><span>点县域或地点，</span><span>看住宿、取舍、避坑。</span><span>路线和分支只留底部简表。</span></p>
+        <h2><span>四国旅行地图</span><small>按县域与地点查看取舍</small></h2>
+        <p className="intro-copy"><span>点县域或地点，</span><span>只看住宿、取舍、避坑。</span><span>13 天主线和跳岛分支</span><span>收进底部简表。</span></p>
       </div>
 
       <ShikokuMap selectedRegion={selectedRegion} selectedSpot={selectedSpot} onRegion={selectRegion} onSpot={selectSpot} />

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { markerPositions, prefecturePaths, shikokuViewBox } from './mapPaths.js';
+import { spotImages } from './spotImages.js';
 import './styles.css';
 
 const A = '/assets/';
@@ -133,6 +134,33 @@ const extraSpots = [
 
 const allSpots = [...routeSpots, ...extraSpots];
 
+const regionGallerySeeds = {
+  kagawa: ['ritsurin', 'shodoshima', 'kotohira', 'takaya'],
+  tokushima: ['naruto', 'uzu-no-michi', 'otsuka', 'iya'],
+  kochi: ['kochi-castle', 'shimanto', 'niyodo', 'katsurahama'],
+  ehime: ['matsuyama-castle', 'dogo', 'ozu', 'uchiko']
+};
+
+function galleryFor(target, region) {
+  if (target?.id && spotImages[target.id]?.length) return spotImages[target.id];
+  const seedIds = regionGallerySeeds[region.id] || [];
+  const images = seedIds.flatMap(id => spotImages[id] || []);
+  if (images.length) return images.slice(0, 4);
+  return [{ src: `${A}${region.image}`, caption: region.name, source: '' }];
+}
+
+function imageSource(src) {
+  return src?.startsWith('http') || src?.startsWith('/') ? src : `${A}${src}`;
+}
+
+function RegionNav({ selectedRegion, onRegion }) {
+  return <div className="region-nav" aria-label="四国县域切换">
+    {Object.values(prefectures).map(p => <button key={p.id} className={selectedRegion === p.id ? 'active' : ''} onClick={() => onRegion(p.id)}>
+      <b>{p.name}</b><span>{p.mood}</span>
+    </button>)}
+  </div>;
+}
+
 const routeDays = [
   { d:'D1', t:'高松落地', spot:'takamatsu', note:'抵达后不安排硬景点。' },
   { d:'D2', t:'栗林公园', spot:'ritsurin', note:'庭园 + 港口街区，把速度降下来。' },
@@ -224,8 +252,21 @@ function DetailPanel({ region, spot, tab, onTab, saved, onSave }) {
   const fullLines = Object.entries(detailSource).flatMap(([key, lines]) => lines.map(line => `${detailTabs.find(([id]) => id === key)?.[1] || key}｜${line}`));
   const decisionKey = spot?.id || region.id;
 
+  const gallery = galleryFor(spot, region);
+
   return <aside className="detail-panel">
-    <div className="photo"><img src={`${A}${region.image}`} alt={targetName} /></div>
+    <div className="detail-gallery" aria-label={`${targetName}参考图片`}>
+      <figure className="hero-photo">
+        <img src={imageSource(gallery[0]?.src)} alt={`${targetName}参考图 1`} loading="lazy" />
+        <figcaption>{gallery[0]?.caption || targetName}</figcaption>
+      </figure>
+      <div className="thumb-strip">
+        {gallery.slice(1, 4).map((img, index) => <a key={`${img.src}-${index}`} href={img.source || img.src} target="_blank" rel="noreferrer" title={img.caption || targetName}>
+          <img src={imageSource(img.src)} alt={`${targetName}参考图 ${index + 2}`} loading="lazy" />
+          <span>{img.caption || '参考图'}</span>
+        </a>)}
+      </div>
+    </div>
     <div className="detail-kicker">{region.kana} · {spot ? spot.label : region.mood}</div>
     <h1>{targetName}</h1>
     <p className="summary">{spot ? detailSource.overview[0] : region.summary}</p>
@@ -278,7 +319,13 @@ function SpotLibrary({ onSpot }) {
     <div className="library-grid">
       {Object.values(prefectures).map(p => <article key={p.id}>
         <h3>{p.name}</h3>
-        {extraSpots.filter(s => s.region === p.id).map(s => <button key={s.id} onClick={() => onSpot(s)}><b>{s.name}</b><span>{s.label} · {s.days}</span></button>)}
+        {extraSpots.filter(s => s.region === p.id).map(s => {
+          const cover = spotImages[s.id]?.[0];
+          return <button key={s.id} onClick={() => onSpot(s)}>
+            {cover && <img src={imageSource(cover.src)} alt={`${s.name}参考图`} loading="lazy" />}
+            <b>{s.name}</b><span>{s.label} · {s.days}</span>
+          </button>;
+        })}
       </article>)}
     </div>
   </section>;
@@ -301,16 +348,24 @@ function App() {
       <div className="top-summary">13 天骨架 · 多景点池 · 自选取舍</div>
     </header>
 
-    <section className="map-shell">
-      <div className="intro-card">
+    <section className="atlas-intro">
+      <div>
         <p className="eyebrow">Personal travel atlas</p>
-        <h2><span>先看地图，</span><span>再挑景点。</span></h2>
-        <p className="intro-copy"><span>主线保留轻松骨架。</span><span>景点池按县域展开，想去哪里你来选。</span><span>德岛已补鸣门漩涡、大鸣门桥和观潮船。</span></p>
-        <AttractionPicker regionId={selectedRegion} selectedSpot={selectedSpot} onSpot={selectSpot} />
-        <div className="map-audit-note"><b>地图核对</b><span>轮廓和点位已按真实四国方位整理；它是攻略决策定位图，不是导航比例尺。</span></div>
+        <h2><span>地图单独放大，</span><span>景点用图片判断。</span></h2>
       </div>
+      <p className="intro-copy"><span>主线保留轻松骨架，地图区现在独立成大画布。</span><span>景点池按县域切换，点位不再挤在侧栏里。</span><span>每个景点补了 3–4 张参考图，打开详情就能看清气质。</span></p>
+    </section>
 
+    <section className="map-stage" aria-label="四国大地图">
+      <div className="map-stage-head">
+        <div><b>四国大地图</b><span>先选县域，再点地图小点；当前只显示该县景点池，避免全岛点位混成一团。</span></div>
+        <RegionNav selectedRegion={selectedRegion} onRegion={selectRegion} />
+      </div>
       <ShikokuMap selectedRegion={selectedRegion} selectedSpot={selectedSpot} onRegion={selectRegion} onSpot={selectSpot} />
+    </section>
+
+    <section className="detail-workbench" aria-label="景点详情与图片">
+      <AttractionPicker regionId={selectedRegion} selectedSpot={selectedSpot} onSpot={selectSpot} />
       <DetailPanel region={region} spot={selectedSpot} tab={activeTab} onTab={setActiveTab} saved={saved} onSave={saveDecision} />
     </section>
 

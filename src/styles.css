@@ -534,7 +534,7 @@ img { display: block; max-width: 100%; }
   .photo { grid-row: 1 / span 9; }
 }
 @media (max-width: 760px) {
-  .map-page { padding: 10px; }
+  .map-page { width: calc(100vw - 20px); max-width: none; padding: 10px; }
   .map-topbar { align-items: flex-start; flex-direction: column; border-radius: 20px; gap: 6px; }
   .brand { font-size: 14px; }
   .top-summary { white-space: normal; font-size: 12px; }
@@ -554,6 +554,163 @@ img { display: block; max-width: 100%; }
   .two-col, .variant-dock { grid-template-columns: 1fr; }
   .dock-head { flex-direction: column; gap: 4px; }
   .day-rail { grid-template-columns: repeat(13, 88px); }
+}
+
+.attraction-marker {
+  cursor: pointer;
+  outline: none;
+  pointer-events: bounding-box;
+}
+.attraction-marker:focus { outline: none; }
+.attraction-marker .hit-area {
+  fill: transparent;
+  stroke: transparent;
+  pointer-events: all;
+}
+.attraction-marker .attraction-dot {
+  fill: #fffdf8;
+  stroke: rgba(36, 72, 63, .72);
+  stroke-width: 1.8;
+  filter: drop-shadow(0 4px 7px rgba(24, 30, 26, .16));
+  transition: transform .18s ease, fill .18s ease, stroke .18s ease;
+  pointer-events: none;
+}
+.attraction-marker:hover .attraction-dot,
+.attraction-marker.active .attraction-dot {
+  fill: #24483f;
+  stroke: #fffdf8;
+  transform: scale(1.35);
+}
+.attraction-marker text {
+  font-size: 9.7px;
+  font-weight: 740;
+  fill: rgba(32, 35, 31, .76);
+  paint-order: stroke;
+  stroke: rgba(255, 253, 248, .94);
+  stroke-width: 3.6px;
+  stroke-linejoin: round;
+  pointer-events: all;
+  letter-spacing: .01em;
+}
+.attraction-marker.active text { fill: var(--accent); }
+.source-link {
+  align-self: flex-start;
+  margin-top: 10px;
+  border: 1px solid rgba(36, 72, 63, .16);
+  border-radius: 999px;
+  padding: 5px 10px;
+  color: var(--accent);
+  background: rgba(255,255,255,.52);
+  font-size: 12px;
+  font-weight: 720;
+}
+.source-link:hover { background: var(--accent-soft); }
+.picker-card {
+  display: grid;
+  gap: 8px;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255,255,255,.45);
+}
+.picker-card > b { color: var(--accent); font-size: 14px; }
+.picker-card > span { color: var(--muted); font-size: 12.5px; line-height: 1.55; }
+.picker-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 238px;
+  overflow: auto;
+  padding-right: 2px;
+}
+.picker-list button {
+  border: 1px solid rgba(36, 72, 63, .14);
+  border-radius: 999px;
+  background: rgba(255,255,255,.58);
+  color: #465047;
+  padding: 5px 8px;
+  font-size: 12px;
+  font-weight: 680;
+}
+.picker-list button:hover,
+.picker-list button.active {
+  background: var(--accent-soft);
+  border-color: rgba(36, 72, 63, .28);
+  color: var(--accent);
+}
+.spot-library {
+  max-width: 1540px;
+  margin: 14px auto 0;
+  border-radius: 24px;
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,.82);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px) saturate(118%);
+}
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.library-grid article {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255,255,255,.42);
+  padding: 12px;
+}
+.library-grid h3 {
+  margin: 0 0 9px;
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 760;
+}
+.library-grid button {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid rgba(43, 49, 43, .10);
+  background: transparent;
+  padding: 9px 0;
+  text-align: left;
+}
+.library-grid button:first-of-type { border-top: 0; }
+.library-grid button b { display: block; color: #30362f; font-size: 13px; }
+.library-grid button span { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; }
+.library-grid button:hover b { color: var(--accent); }
+
+@media (max-width: 1240px) and (min-width: 761px) {
+  .library-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .map-shell,
+  .map-topbar,
+  .intro-card,
+  .real-map-card,
+  .detail-panel,
+  .route-dock,
+  .variant-dock,
+  .spot-library { width: 100%; max-width: 100%; }
+  .intro-card,
+  .picker-card,
+  .map-audit-note { overflow: hidden; }
+  .map-audit-note span { overflow-wrap: anywhere; word-break: normal; }
+  .picker-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-height: none;
+    overflow: visible;
+  }
+  .picker-list button {
+    min-width: 0;
+    width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+    line-height: 1.35;
+  }
+  .attraction-marker text { font-size: 8.5px; stroke-width: 3.2px; }
+  .library-grid { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }

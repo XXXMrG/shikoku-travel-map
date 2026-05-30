@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="四国旅行地图">
+  <rect width="64" height="64" rx="18" fill="#090b10"/>
+  <circle cx="46" cy="18" r="13" fill="#ffb526"/>
+  <path d="M15 36c8-11 20-14 35-9-5 14-16 21-31 18-5-1-7-5-4-9z" fill="#9d8cff"/>
+  <path d="M19 42c9-4 19-8 31-15" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 7"/>
+  <circle cx="21" cy="40" r="5" fill="#fff"/>
+</svg>

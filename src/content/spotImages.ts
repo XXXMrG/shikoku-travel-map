@@ -1,7 +1,9 @@
+import type { GalleryImage } from './types';
+
 // Spot gallery data for the Shikoku travel atlas. Shared by map details and the gallery page.
 // Local assets are used where verified; remote images are official tourism pages or Wikimedia Commons thumbnails with source links.
 // Rule: visible gallery references must be unique and every spot should have at least 3 images.
-export const spotImages = {
+export const spotImages: Record<string, GalleryImage[]> = {
   "angel-road": [
     {
       "src": "/assets/spot-gallery/angel-road-01.jpg",

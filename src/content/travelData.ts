@@ -1,7 +1,9 @@
+import type { DetailContent, DetailTabId, Prefecture, RegionId, RouteDay, Spot } from './types';
+
 // Core Shikoku travel data: regions, POIs, route skeleton, and branch notes.
 // Keep this file UI-free so map/detail/gallery pages share one source of truth.
 
-export const detailTabs = [
+export const detailTabs: Array<[DetailTabId, string]> = [
   ['overview', '概览'],
   ['plan', '安排'],
   ['traffic', '交通'],
@@ -9,10 +11,10 @@ export const detailTabs = [
   ['rules', '取舍']
 ];
 
-const d = (overview, plan, traffic, stay, rules) => ({ overview, plan, traffic, stay, rules });
-const spot = (id, region, name, type, label, days, x, y, details, source, dx = 12, dy = -10) => ({ id, region, name, type, label, days, x, y, dx, dy, details, source });
+const d = (overview: string[], plan: string[], traffic: string[], stay: string[], rules: string[]): DetailContent => ({ overview, plan, traffic, stay, rules });
+const spot = (id: string, region: RegionId, name: string, type: string, label: string, days: string, x: number, y: number, details: DetailContent, source: string, dx = 12, dy = -10): Spot => ({ id, region, name, type, label, days, x, y, dx, dy, details, source });
 
-export const prefectures = {
+export const prefectures: Record<RegionId, Prefecture> = {
   kagawa: {
     id: 'kagawa', name: '香川', kana: 'Kagawa', mood: '入口 / 庭园 / 瀬户内跳岛', tone: '#8fa885',
     image: 'shikoku_02_Ritsurin_bdd6995a.jpg',
@@ -71,7 +73,7 @@ export const prefectures = {
   }
 };
 
-export const routeSpots = [
+export const routeSpots: Spot[] = [
   spot('takamatsu','kagawa','高松','base','主基地','D1–D3',507.3,87.8,d(['四国入口和瀬户内枢纽。现在作为香川景点池的起点，而不是唯一内容。'],['D1 落地、吃乌冬、散步；D2 栗林公园 + 港口街区。'],['港口、JR、机场巴士都方便；跳岛前确认船班。'],['高松港/北滨/片原町/瓦町优先，方便吃饭和转车。'],['慢启动，少换乘，别第一天就把自己累爆。']),'https://www.japan.travel/en/destinations/shikoku/kagawa/'),
   spot('shodoshima','kagawa','小豆岛','island','海岛慢日','D3',545,54.5,d(['小豆岛适合作为海岛散心，也可展开成一整天景点选择。'],['橄榄公园、寒霞溪、天使之路、酱油仓、海边咖啡按天气和潮汐选。'],['高松港往返；岛内巴士节奏慢，提前查末班。'],['主线可不住岛；如果跳岛分支升级，再评估岛宿。'],['宁可少走，也不要追全岛。']),'https://www.my-kagawa.jp/en/see-and-do/10120'),
   spot('kotohira','kagawa','琴平','buffer','进山缓冲','D4',461.9,124.6,d(['高松到祖谷之间的降速缓冲。'],['金刀比罗宫参道、旧金毗罗大芝居、琴平小镇散步。'],['从高松转入琴平相对顺；次日再进大步危/祖谷。'],['琴平一晚的价值是减少第二天转场压力。'],['它的价值是缓冲，不是硬凑景点。']),'https://www.my-kagawa.jp/en/see-and-do/10078'),
@@ -84,7 +86,7 @@ export const routeSpots = [
   spot('takaya','kagawa','高屋神社','optional','天空鸟居','备选',424.6,141.1,d(['天空鸟居很强，但它是天气、体力和交通点。'],['只适合状态好、天气好、交通确认后的半日备选。'],['查登山道开放、停车/接驳、公交可达性。'],['不为它单独改落脚。'],['不要塞进疲劳日；不要为一张照片破坏主线。']),'https://www.my-kagawa.jp/en/see-and-do/10128',-84,14)
 ];
 
-export const extraSpots = [
+export const extraSpots: Spot[] = [
   spot('ritsurin','kagawa','栗林公园','garden','庭园','半日',503,93,d(['日本代表性大名庭园之一，一步一景，早晨和秋色尤其适合慢逛。'],['放在高松整日的上午，下午留港口或北滨。'],['JR 栗林公园北口或琴电栗林公园站步行可达。'],['住高松市区即可。'],['优先级高，适合保留。']),'https://www.japan.travel/en/spot/833/'),
   spot('tamamo','kagawa','玉藻公园 / 高松城迹','history','海城','1–2小时',510,84,d(['日本少见海城遗迹，适合和高松港一起轻逛。'],['落地日或栗林公园后补一个短点。'],['JR 高松站、高松港附近，交通很顺。'],['住高松港周边最方便。'],['短平快，可作为雨前雨后补点。']),'https://www.my-kagawa.jp/en/see-and-do/10093'),
   spot('yashima','kagawa','屋岛','view','展望','半日',536,90,d(['桌状熔岩台地，可看高松市区和瀬户内海群岛。'],['山顶展望、屋岛寺、四国村可组合。'],['公交/自驾上山；夜景要特别确认交通。'],['高松市内往返即可。'],['天气好加，天气差删。']),'https://www.my-kagawa.jp/en/see-and-do/10080'),
@@ -94,11 +96,11 @@ export const extraSpots = [
   spot('marugame','kagawa','丸龟城','castle','现存天守','2小时',472,104,d(['现存木造天守与高石垣，适合补一个城郭点。'],['可与琴平/善通寺同日。'],['JR 丸龟站步行可达。'],['不需要为它换落脚。'],['喜欢城郭可加。']),'https://www.my-kagawa.jp/en/see-and-do/10084'),
   spot('chichibugahama','kagawa','父母滨','sunset','天空之镜','夕景',410,128,d(['退潮浅水洼在日落时形成镜面倒影。'],['只在低潮+日落+无风条件好时去。'],['需查潮汐和夕阳时间，自驾更方便。'],['可从高松/琴平顺路。'],['条件不好就删，不要硬跑。']),'https://www.my-kagawa.jp/en/see-and-do/10090'),
   spot('zentsuji','kagawa','善通寺','pilgrimage','空海','1–2小时',459,118,d(['空海诞生地相关寺院，也是四国遍路重要札所。'],['可与琴平或丸龟组合。'],['JR 善通寺站可达。'],['不需换落脚。'],['对遍路/空海感兴趣再加。']),'https://www.my-kagawa.jp/en/see-and-do/10094'),
-  spot('naruto','tokushima','鸣门漩涡','nature','海峡奇观','半日',620,127,d(['鸣门海峡因潮位差形成世界级大漩涡，春秋大潮尤其壮观。'],['按潮汐窗口安排 Uzu-no-Michi 或观潮船，必要时加大塚美术馆。'],['最佳在涨落潮前后约 1.5 小时；必须查当日潮汐。'],['可住德岛市/鸣门，也可作为高松到德岛东线分支。'],['强烈新增为德岛东线核心；不查潮汐就不要去。']),'https://www.pref.tokushima.lg.jp/en/japanese/tourism/spot/uzushio/'),
-  spot('uzu-no-michi','tokushima','涡之道','view','桥下步道','1–2小时',617,122,d(['大鸣门桥下 450 米步道，45 米高玻璃地板俯看海峡。'],['适合和观潮船互补：桥上看结构，船上看临场感。'],['从 JR 鸣门站或德岛站乘巴士到鸣门公园。'],['鸣门/德岛市均可。'],['恐高者可改观潮船或展望台。']),'https://www.pref.tokushima.lg.jp/en/japanese/tourism/spot/uzunomichi/'),
-  spot('otsuka','tokushima','大塚国际美术馆','museum','名画陶板','半日/一日',612,129,d(['以陶板原寸再现世界名画，雨天和文化向都很强。'],['可和鸣门漩涡组成一日；美术馆体量很大，不要只留一小时。'],['鸣门公园周边，周一等闭馆日需查。'],['住鸣门或德岛市。'],['喜欢美术就保留，不喜欢可删。']),'https://discovertokushima.net/en/spots/otsuka-museum-of-art/'),
-  spot('awaodori','tokushima','阿波舞会馆','culture','传统舞蹈','1–2小时',595,160,d(['全年可看阿波舞表演，补上德岛最有代表性的城市文化。'],['和眉山缆车、德岛市晚饭组合。'],['JR 德岛站步行约 10 分钟。'],['德岛市落脚最方便。'],['若不赶节庆，阿波舞会馆是稳定替代。']),'https://discovertokushima.net/en/spots/awaodorimuseum/'),
-  spot('bizan','tokushima','眉山','view','城市展望','1小时',590,164,d(['德岛市象征，山顶可看城市、吉野川和远处海面。'],['阿波舞会馆楼上坐缆车很顺。'],['缆车结束时间随季节变化。'],['德岛市落脚。'],['天气好加，交通顺。']),'https://discovertokushima.net/en/spots/bizan-ropeway/'),
+  spot('naruto','tokushima','鸣门漩涡','nature','海峡奇观','半日',630,118,d(['鸣门海峡因潮位差形成世界级大漩涡，春秋大潮尤其壮观。'],['按潮汐窗口安排 Uzu-no-Michi 或观潮船，必要时加大塚美术馆。'],['最佳在涨落潮前后约 1.5 小时；必须查当日潮汐。'],['可住德岛市/鸣门，也可作为高松到德岛东线分支。'],['强烈新增为德岛东线核心；不查潮汐就不要去。']),'https://www.pref.tokushima.lg.jp/en/japanese/tourism/spot/uzushio/'),
+  spot('uzu-no-michi','tokushima','涡之道','view','桥下步道','1–2小时',612,116,d(['大鸣门桥下 450 米步道，45 米高玻璃地板俯看海峡。'],['适合和观潮船互补：桥上看结构，船上看临场感。'],['从 JR 鸣门站或德岛站乘巴士到鸣门公园。'],['鸣门/德岛市均可。'],['恐高者可改观潮船或展望台。']),'https://www.pref.tokushima.lg.jp/en/japanese/tourism/spot/uzunomichi/'),
+  spot('otsuka','tokushima','大塚国际美术馆','museum','名画陶板','半日/一日',620,140,d(['以陶板原寸再现世界名画，雨天和文化向都很强。'],['可和鸣门漩涡组成一日；美术馆体量很大，不要只留一小时。'],['鸣门公园周边，周一等闭馆日需查。'],['住鸣门或德岛市。'],['喜欢美术就保留，不喜欢可删。']),'https://discovertokushima.net/en/spots/otsuka-museum-of-art/'),
+  spot('awaodori','tokushima','阿波舞会馆','culture','传统舞蹈','1–2小时',603,156,d(['全年可看阿波舞表演，补上德岛最有代表性的城市文化。'],['和眉山缆车、德岛市晚饭组合。'],['JR 德岛站步行约 10 分钟。'],['德岛市落脚最方便。'],['若不赶节庆，阿波舞会馆是稳定替代。']),'https://discovertokushima.net/en/spots/awaodorimuseum/'),
+  spot('bizan','tokushima','眉山','view','城市展望','1小时',584,172,d(['德岛市象征，山顶可看城市、吉野川和远处海面。'],['阿波舞会馆楼上坐缆车很顺。'],['缆车结束时间随季节变化。'],['德岛市落脚。'],['天气好加，交通顺。']),'https://discovertokushima.net/en/spots/bizan-ropeway/'),
   spot('oboke','tokushima','大步危峡','gorge','峡谷游船','半日',466,199,d(['吉野川切割出的峡谷，观光船比漂流更轻松。'],['适合祖谷第一天或第二天低强度安排。'],['JR 大步危站附近，但班次仍需查。'],['大步危/三好落脚。'],['主线保留度高。']),'https://discovertokushima.net/en/spots/obokeandkobokegorges/'),
   spot('kazurabashi','tokushima','祖谷葛桥','bridge','藤桥','1–2小时',458,212,d(['以山藤编成的吊桥横跨祖谷川，是祖谷最有辨识度的体验。'],['与祖谷溪、小便小僧组合。'],['从大步危转巴士或自驾；维护期需查。'],['大步危/祖谷落脚。'],['若只选祖谷一个点，优先它。']),'https://discovertokushima.net/en/spots/vinebridges-iyavalley/'),
   spot('peeing-boy','tokushima','祖谷溪小便小僧','view','峡谷地标','短停',438,198,d(['临崖雕像和祖谷溪深谷，是山路上的标志性照片点。'],['适合自驾/包车路线上短停。'],['道路狭窄，公共交通不适合临时加。'],['同祖谷落脚。'],['非自驾时不要强求。']),'https://miyoshi-tourism.jp/en/spot/65/'),
@@ -130,14 +132,14 @@ export const extraSpots = [
 export const allSpots = [...routeSpots, ...extraSpots];
 
 
-export const regionGallerySeeds = {
+export const regionGallerySeeds: Record<RegionId, string[]> = {
   kagawa: ['ritsurin', 'shodoshima', 'kotohira', 'takaya'],
   tokushima: ['naruto', 'uzu-no-michi', 'otsuka', 'iya'],
   kochi: ['kochi-castle', 'shimanto', 'niyodo', 'katsurahama'],
   ehime: ['matsuyama-castle', 'dogo', 'ozu', 'uchiko']
 };
 
-export const routeDays = [
+export const routeDays: RouteDay[] = [
   { d:'D1', t:'高松落地', spot:'takamatsu', note:'抵达后不安排硬景点。' },
   { d:'D2', t:'栗林公园', spot:'ritsurin', note:'庭园 + 港口街区，把速度降下来。' },
   { d:'D3', t:'小豆岛', spot:'shodoshima', note:'海岛慢日，从景点池选 2–3 个。' },
@@ -153,7 +155,7 @@ export const routeDays = [
   { d:'D13', t:'返程', spot:'matsuyama', note:'只保留返程缓冲，不加重景点。' }
 ];
 
-export const variants = [
+export const variants: Array<[string, string]> = [
   ['德岛东线', '新增鸣门漩涡、Uzu-no-Michi、观潮船、大塚美术馆；需要按潮汐和闭馆日安排。'],
   ['多景点池', '四县都扩成可选点位库：地图上先看位置，再决定是否替换主线。'],
   ['住宿降权', '不再把某一种住宿形式当核心目标；落脚只服务动线、交通和体力恢复。']

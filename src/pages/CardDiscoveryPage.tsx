@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { Draggable } from 'gsap/Draggable';
-import { ArrowLeft, ArrowRight, ChevronDown, ListChecks, MapPinned, Navigation2, Plus, RotateCcw, ShoppingBag, Sparkles, Trash2, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronDown, ListChecks, MapPinned, Navigation2, Plus, RotateCcw, ShoppingBag, Trash2, X } from 'lucide-react';
 import { prefecturePaths, shikokuViewBox } from '@/content/mapPaths';
 import { allSpots, prefectures } from '@/content/travelData';
 import { spotImages } from '@/content/spotImages';
@@ -311,7 +311,7 @@ function SpotCard({
             <ArrowLeft className="h-4 w-4" /> 暂不
           </button>
           <button type="button" className="inline-flex min-h-11 items-center justify-center gap-1 rounded-full border border-white/52 bg-white/50 px-3 text-sm font-black text-current backdrop-blur transition hover:bg-white/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" onClick={expanded ? onCollapse : onDetails} aria-label={`${expanded ? '收起' : '展开'} ${spot.name} 详情`} disabled={!current} tabIndex={current ? 0 : -1}>
-            <ChevronDown className={cn('h-4 w-4 transition-transform', expanded && 'rotate-180')} /> {expanded ? '收起详情' : '下滑详情'}
+            <ChevronDown className={cn('h-4 w-4 transition-transform', expanded && 'rotate-180')} /> {expanded ? '收起详情' : '看详情'}
           </button>
           <button type="button" className="inline-flex min-h-11 items-center justify-center gap-1 rounded-full border border-white/70 bg-white/90 px-3 text-sm font-black text-current shadow-[0_10px_26px_rgba(0,0,0,.16)] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" onClick={onAdd} aria-label={`加入 ${spot.name} 到清单`} disabled={!current} tabIndex={current ? 0 : -1}>
             加入 <ArrowRight className="h-4 w-4" />
@@ -396,7 +396,7 @@ function GeneratedMap({ selectedSpots, activeId, onActive }: { selectedSpots: Sp
           <div className="absolute inset-0 grid place-items-center p-5 text-center">
             <div className="max-w-xs rounded-[1.3rem] border border-white/12 bg-black/35 p-4 shadow-sm backdrop-blur-md">
               <MapPinned className="mx-auto mb-2 h-7 w-7 text-white" />
-              <b className="text-sm text-white/82">右滑或点击“加入”后，分布图会自动生成。</b>
+              <b className="text-sm text-white/82">把心动景点加入清单后，这里会生成分布图。</b>
             </div>
           </div>
         )}
@@ -484,7 +484,7 @@ function CartDrawer({
           <section className="rounded-[1.55rem] border border-white/10 bg-white/[0.06] p-3">
             <div className="mb-3 flex items-center justify-between gap-2">
               <h3 className="m-0 text-base font-black">已加入</h3>
-              <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-xs font-black text-white/56">像购物车一样可删改</span>
+              <span className="rounded-full bg-white/[0.08] px-2.5 py-1 text-xs font-black text-white/56">可随时删改</span>
             </div>
             <div className="grid max-h-[28dvh] gap-2 overflow-y-auto pr-1 max-sm:max-h-[22dvh]" data-cart-list>
               {selectedSpots.length ? selectedSpots.map((spot, index) => {
@@ -502,7 +502,7 @@ function CartDrawer({
                 );
               }) : (
                 <div className="rounded-[1.25rem] border border-dashed border-white/16 bg-black/20 p-5 text-sm font-bold leading-7 text-white/56">
-                  清单还为空。右滑加入，左滑暂不，下滑只展开当前卡片详情，不再触发页面滚动。
+                  清单还为空。遇到想去的地方，点“加入”收进这里。
                 </div>
               )}
             </div>
@@ -519,12 +519,12 @@ function StatusRail({ acceptedCount, skippedCount, remainingCount, progress, onO
   return (
     <aside className="app-chrome hidden min-w-0 content-center gap-4 lg:grid">
       <div className="rounded-[2rem] border border-white/12 bg-white/[0.07] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,.12)] backdrop-blur-2xl">
-        <p className="m-0 font-mono text-[10px] font-black uppercase tracking-[0.18em] text-white/42">Fullscreen deck</p>
+        <p className="m-0 font-mono text-[10px] font-black uppercase tracking-[0.18em] text-white/42">Shikoku cards</p>
         <h1 className="m-0 mt-2 text-[clamp(2.2rem,4.6vw,4.6rem)] font-black leading-[.9] tracking-[-0.07em] text-white">
-          景点卡片<br />独立操作台
+          四国景点<br />灵感卡片
         </h1>
         <p className="mt-4 max-w-sm text-sm font-bold leading-7 text-white/62">
-          这里不再套地图页框架。全屏只处理手势：左右决定取舍，下滑打开当前景点细节，清单从右侧像购物车一样滑出。
+          从栗林公园、小豆岛、直岛到祖谷溪，把想去的地方收进清单，再看它们在四国的分布。
         </p>
       </div>
       <div className="rounded-[2rem] border border-white/12 bg-white/[0.07] p-4 backdrop-blur-2xl">
@@ -723,7 +723,7 @@ export function CardDiscoveryPage() {
           </Link>
         </div>
         <div className="pointer-events-none absolute left-1/2 top-3 hidden -translate-x-1/2 rounded-full border border-white/10 bg-black/25 px-4 py-2 text-center font-mono text-[10px] font-black uppercase tracking-[0.2em] text-white/46 backdrop-blur-xl sm:block">
-          GSAP attraction deck
+          四国景点卡片
         </div>
         <ChromeButton className="relative bg-white text-black hover:bg-white/90" onClick={() => setCartOpen(true)} aria-label={`打开景点清单，已加入 ${acceptedIds.length} 个`}>
           <ShoppingBag className="h-4 w-4" />清单
@@ -761,10 +761,6 @@ export function CardDiscoveryPage() {
         />
       </section>
 
-      <div className="pointer-events-none absolute bottom-[4.7rem] left-3 z-40 hidden max-w-[15rem] rounded-[1.2rem] border border-white/10 bg-black/30 p-3 text-xs font-bold leading-5 text-white/58 backdrop-blur-xl max-sm:block" aria-hidden="true">
-        左右滑动取舍，下滑只展开卡片详情；页面本身不滚动。
-      </div>
-
       <CartDrawer
         open={cartOpen}
         selectedSpots={selectedSpots}
@@ -778,9 +774,6 @@ export function CardDiscoveryPage() {
         onReset={resetAll}
       />
 
-      <div className="pointer-events-none absolute left-1/2 top-[4.75rem] z-20 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[11px] font-black text-white/52 backdrop-blur-xl sm:flex lg:hidden" aria-hidden="true">
-        <Sparkles className="h-3.5 w-3.5" /> 全屏操作 · 右上角打开清单
-      </div>
       {currentSpot && (
         <Link className="app-chrome absolute bottom-3 right-3 z-50 hidden min-h-11 items-center gap-2 rounded-full border border-white/12 bg-white/[0.08] px-4 py-2 text-sm font-black text-white backdrop-blur-xl transition hover:bg-white/[0.14] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 lg:inline-flex" to={`/?region=${currentSpot.region}&spot=${currentSpot.id}`}>
           <Navigation2 className="h-4 w-4" />原地图定位

@@ -16,7 +16,7 @@ export function AttractionPicker({ regionId, selectedSpot, onSpot }: AttractionP
     <Card className="sticky top-3 min-w-0 rounded-[1.4rem] max-xl:static">
       <CardHeader className="gap-1 pb-3">
         <CardTitle className="text-[15px]">{prefectures[regionId].name}景点池</CardTitle>
-        <CardDescription>{items.length} 个可选点位，点击后地图和右侧详情同步。</CardDescription>
+        <CardDescription>{items.length} 个可选点位，选择后查看位置、图片和取舍建议。</CardDescription>
       </CardHeader>
       <CardContent className="grid max-h-[560px] gap-1.5 overflow-auto pr-2 max-xl:max-h-none max-xl:grid-cols-3 max-xl:overflow-visible max-md:grid-cols-2 max-sm:grid-cols-1">
         {items.map(spot => (

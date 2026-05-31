@@ -14,7 +14,7 @@ export function SpotLibrary({ onSpot }: SpotLibraryProps) {
     <Card className="mt-3 rounded-[1.5rem] p-3.5" aria-label="四国景点池总览">
       <div className="mb-3 flex justify-between gap-4 text-sm text-muted-foreground max-sm:flex-col max-sm:gap-1">
         <b className="text-primary">四国景点池</b>
-        <span>不强行塞进 13 天；先按县域看位置和类型，再决定替换哪个主线日。</span>
+        <span>先按县域看位置和类型，再挑适合替换主线的半日/一日模块。</span>
       </div>
       <div className="grid grid-cols-4 gap-2.5 max-xl:grid-cols-2 max-sm:grid-cols-1">
         {Object.values(prefectures).map(region => (

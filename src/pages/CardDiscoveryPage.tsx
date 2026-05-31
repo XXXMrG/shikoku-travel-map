@@ -277,8 +277,8 @@ function SpotCard({
                 <b>{region.name}</b>
               </div>
               <div className="rounded-2xl border border-white/45 bg-white/40 p-2.5">
-                <span className="block opacity-60">坐标</span>
-                <b>{Math.round(point.x)} / {Math.round(point.y)}</b>
+                <span className="block opacity-60">主题</span>
+                <b>{spot.label}</b>
               </div>
               <div className="rounded-2xl border border-white/45 bg-white/40 p-2.5">
                 <span className="block opacity-60">图库</span>
@@ -457,7 +457,7 @@ function CartDrawer({
           'fixed right-3 top-3 z-[80] grid h-[calc(100dvh-1.5rem)] w-[min(430px,calc(100vw-1.5rem))] grid-rows-[auto_minmax(0,1fr)] overflow-hidden rounded-[2rem] border border-white/14 bg-[#111318]/92 text-white shadow-[0_30px_120px_rgba(0,0,0,.55)] backdrop-blur-2xl transition-transform duration-300 ease-out max-sm:inset-x-2 max-sm:bottom-2 max-sm:top-auto max-sm:h-[min(78dvh,720px)] max-sm:w-auto max-sm:rounded-[1.7rem]',
           open ? 'translate-x-0 max-sm:translate-y-0' : 'translate-x-[calc(100%+1rem)] max-sm:translate-x-0 max-sm:translate-y-[calc(100%+1rem)]'
         )}
-        aria-label="滑出式景点清单购物车"
+        aria-label="景点清单"
         aria-hidden={!open}
       >
         <header className="border-b border-white/10 p-4">
@@ -776,7 +776,7 @@ export function CardDiscoveryPage() {
 
       {currentSpot && (
         <Link className="app-chrome absolute bottom-3 right-3 z-50 hidden min-h-11 items-center gap-2 rounded-full border border-white/12 bg-white/[0.08] px-4 py-2 text-sm font-black text-white backdrop-blur-xl transition hover:bg-white/[0.14] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 lg:inline-flex" to={`/?region=${currentSpot.region}&spot=${currentSpot.id}`}>
-          <Navigation2 className="h-4 w-4" />原地图定位
+          <Navigation2 className="h-4 w-4" />在地图中看
         </Link>
       )}
     </main>

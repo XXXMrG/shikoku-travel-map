@@ -94,7 +94,7 @@ export function ShikokuMap({ selectedRegion, selectedSpot, onRegion, onSpot }: S
             );
           })}
         </g>
-        <text x="32" y="496" className="source-label">县域轮廓来自 GeoJSON；小点显示当前县景点池，点位为攻略决策定位</text>
+        <text x="32" y="496" className="source-label">当前县景点分布 · 点位仅作行程判断参考</text>
       </svg>
     </section>
   );

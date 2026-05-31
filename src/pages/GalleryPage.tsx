@@ -44,7 +44,7 @@ export function GalleryPage() {
           <h1 className="m-0 text-[clamp(2.25rem,5.2vw,4.9rem)] font-semibold leading-none tracking-[0.015em]">景点图片索引</h1>
         </div>
         <div>
-          <p className="m-0 max-w-3xl text-[clamp(0.95rem,1.2vw,1.125rem)] leading-8 text-stone-700">把图片和景点的关联关系单独摊开：每个景点都有介绍、类型、建议停留和独立图片组，方便你检查“这张图到底属于哪个地方”。</p>
+          <p className="m-0 max-w-3xl text-[clamp(0.95rem,1.2vw,1.125rem)] leading-8 text-stone-700">按四县和景点整理参考图。先看景点介绍、类型和建议停留，再用图片判断是否值得加入路线。</p>
           <div className="mt-4 flex flex-wrap gap-2">
             <Badge variant="accent">{allSpots.length} 个景点</Badge>
             <Badge variant="accent">{totalImages} 张参考图</Badge>

@@ -83,9 +83,9 @@ export function MapPage() {
           </h2>
         </div>
         <p className="m-0 text-[clamp(0.95rem,1.15vw,1.125rem)] leading-8 text-stone-700">
-          <span className="block">主线保留轻松骨架，地图区独立成大画布。</span>
-          <span className="block">景点池按县域切换，点位不再挤在侧栏里。</span>
-          <span className="block">图片关系已拆成独立数据层；完整图集在“景点图片”页按景点核对。</span>
+          <span className="block">先看四县位置和交通，再决定每段要不要加景点。</span>
+          <span className="block">主线保持轻松节奏，香川、德岛、高知、爱媛都可按兴趣扩展。</span>
+          <span className="block">想比较风景、城市和艺术岛，可以去“景点图片”页看完整图集。</span>
         </p>
       </Card>
 
@@ -93,7 +93,7 @@ export function MapPage() {
         <div className="mb-3 grid grid-cols-[minmax(300px,0.75fr)_minmax(520px,1.25fr)] items-center gap-4 max-xl:grid-cols-1">
           <div>
             <b className="block text-lg text-primary">四国大地图</b>
-            <span className="mt-1 block text-[13.5px] leading-6 text-muted-foreground">先选县域，再点地图小点；当前只显示该县景点池，避免全岛点位混成一团。</span>
+            <span className="mt-1 block text-[13.5px] leading-6 text-muted-foreground">先选县域，再点地图小点查看位置、图片和取舍建议。</span>
           </div>
           <RegionNav selectedRegion={selectedRegion} onRegion={selectRegion} />
         </div>

@@ -23,7 +23,7 @@ export function SiteHeader({ page = 'map' }: SiteHeaderProps) {
           <NavLink to="/gallery">景点图片</NavLink>
         </Button>
       </nav>
-      <div className="text-sm text-muted-foreground max-sm:text-xs">13 天骨架 · 多景点池 · 图片核对</div>
+      <div className="text-sm text-muted-foreground max-sm:text-xs">13 天骨架 · 多景点池 · 图片参考</div>
     </header>
   );
 }
